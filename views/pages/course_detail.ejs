@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include('../partials/head'); %>
+</head>
+<body class="container">
+
+<header>
+  <%- include('../partials/header'); %>
+  <%- include('../partials/util'); %>
+  <link href="https://cdn.quilljs.com/1.0.0/quill.snow.css" rel="stylesheet" />
+
+</header>
+
+<main>
+    <h2><%= course.title %> </h2>
+    <div id="quilljs-description" class="ql-container ql-snow ql-editor"></div>
+    <p style="display: none" id="description-hidden"><%= course.description %></p>
+    <div style="display: none">
+        <div id="quill-render-hidden"></div>
+    </div>
+    <h3>Lectures</h3>
+    <ul class="list-group">
+        <% lectures.forEach(lecture => { %>
+            <li class="list-group-item">
+                <a href="/lecture/<%= lecture.id %>"><%= lecture.title %> </a>
+            </li>
+        <% }) %>
+    </ul>
+    
+    <% if (profile.admin) { %>
+        <form id="login-form">
+            <div class="form-group">
+            <label for="title">Title</label>
+            <input name="title" type="text" class="form-control" id="title" value="<%= course.title %> ">
+            </div>
+            <div class="form-group">
+            <input name="description" type="hidden" class="form-control" id="description" value="<%= course.description %>">
+            </div>
+            <div id="editor" style="height: '25rem'"></div>
+            </br>
+            <button type="submit" class="btn btn-primary">Update</button>
+        </form>
+    <% } %>
+    </div>
+</main>
+
+<footer>
+  <%- include('../partials/footer'); %>
+</footer>
+
+<%- include('../partials/firebase'); %>
+
+<script src="https://cdn.quilljs.com/1.0.0/quill.js"></script>
+<script>
+    const descriptionRender = document.getElementById("quilljs-description")
+    const descriotionHidden = document.getElementById("description-hidden")
+    var renderEditor = new Quill('#quill-render-hidden', {
+        modules: { toolbar: {"toolbar": false} },
+        theme: 'snow',
+    });
+    var descriptionContent = {};
+    try {
+        descriptionContent = JSON.parse(descriotionHidden.innerText);
+    } catch (e) {
+        console.log(e);
+    }
+    renderEditor.setContents(descriptionContent);
+    descriptionRender.innerHTML  = renderEditor.root.innerHTML ;
+</script>
+
+<% if (profile.admin) { %>
+<script>
+    const descriptionInput = document.getElementById("description")
+    var toolbarOptions = [
+        ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
+        ['blockquote', 'code-block'],
+    
+        [{ 'header': 1 }, { 'header': 2 }],               // custom button values
+        [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+        [{ 'script': 'sub'}, { 'script': 'super' }],      // superscript/subscript
+        [{ 'indent': '-1'}, { 'indent': '+1' }],          // outdent/indent
+        [{ 'direction': 'rtl' }],                         // text direction
+    
+        [{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
+        [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+    
+        [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
+        [{ 'font': [] }],
+        [{ 'align': [] }],
+    
+        ['clean']                                         // remove formatting button
+    ];
+    var editor = new Quill('#editor', {
+        modules: { toolbar: toolbarOptions },
+        theme: 'snow',
+    });
+    editor.on('text-change', function(delta, oldDelta, source) {
+        descriptionInput.value = JSON.stringify(editor.getContents());
+    });
+    editor.setContents(renderEditor.getContents());
+</script>    
+<% } %>
+</body>
+</html>

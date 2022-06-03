@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include('../partials/head'); %>
+</head>
+<body class="container">
+
+<header>
+  <%- include('../partials/header'); %>
+  <%- include('../partials/util'); %>
+</header>
+
+<main>
+    <h1>Courses</h1>
+    <ul class="list-group">
+        <% courses.forEach(course => { %>
+            <li class="list-group-item">
+                <a href="/course/<%= course.id %>"><%= course.title %> </a>
+            </li>
+        <% }) %>
+    </ul>
+</main>
+
+<footer>
+  <%- include('../partials/footer'); %>
+</footer>
+
+<%- include('../partials/firebase'); %>
+</body>
+</html>

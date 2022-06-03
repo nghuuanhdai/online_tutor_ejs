@@ -1,0 +1,33 @@
+<script type="module">
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.8.2/firebase-app.js'
+    import { getAuth } from 'https://www.gstatic.com/firebasejs/9.8.2/firebase-auth.js'
+
+    const firebaseConfig = {
+        apiKey: "<%= firebase_api_key %>",
+        authDomain: "<%= firebase_auth_domain %>",
+        projectId: "<%= firenase_project_id %>",
+    };
+
+    const app = initializeApp(firebaseConfig);
+    var sessionUser;
+
+    getAuth().onIdTokenChanged(function(user){
+        console.log('id token changed')
+        if(user)
+        {
+            if (!sessionUser)
+                user.getIdToken(true)
+            user.getIdToken().then(token => setCookie('firebase_token',token,1))
+        }
+        else
+        {
+            setCookie('firebase_token',"",1)
+        }
+        sessionUser = user
+    })
+
+    setInterval(function(){
+        if(sessionUser)
+            sessionUser.getIdToken(true)
+    },  10*60*1000);
+</script>
