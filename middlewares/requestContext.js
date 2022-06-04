@@ -1,5 +1,5 @@
 function requestContext(req, res, next) {
-    req.context = {}
+    req.context = {profile: null, user: null}
     next()
 }
 

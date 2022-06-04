@@ -13,6 +13,9 @@
 <main>
     <div class="jumbotron">
         <h1>LOGIN</h1>
+        <div class="alert alert-danger" role="alert" style="display: none" id="login-err">
+          This is a primary alert—check it out!
+        </div>
         <form id="login-form">
             <div class="form-group">
             <label for="exampleInputEmail1">Email address</label>
@@ -41,8 +44,12 @@
         event.preventDefault()
         var formData = new FormData(document.querySelector('#login-form'))
         signInWithEmailAndPassword(getAuth(), formData.get('email'), formData.get('password')).then(({ user }) => {
-            window.location.replace("/");
-        })   
+          window.location.replace("/");
+        })
+        .catch(err=>{
+          document.getElementById('login-err').style.display = 'block'
+          document.getElementById('login-err').innerText = err
+        })
     }
 
     var loginForm = document.getElementById("login-form");

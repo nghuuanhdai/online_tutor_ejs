@@ -17,6 +17,7 @@
     "express": "^4.18.1",
     "firebase-admin": "^10.2.0",
     "formidable": "^2.0.1",
+    "generate-password": "^1.7.0",
     "mongoose": "^6.3.5",
     "vimeo": "^2.1.1"
   },

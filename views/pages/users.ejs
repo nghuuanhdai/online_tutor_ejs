@@ -20,6 +20,9 @@
       </div>
       <button type="submit" class="btn btn-primary">Create Account</button>
     </form>
+    <div id="created-user-container" class="container">
+
+    </div>
   </div>
   <div class="card">
     <form id="edit-account-form" class="card-body">
@@ -38,6 +41,45 @@
 </footer>
 
 <%- include('../partials/firebase'); %>
+<script type="module">
+  const createAccountForm = document.getElementById('create-account-form')
+  const createdUserContainer = document.getElementById('created-user-container')
+  function htmlToElement(html) {
+    var template = document.createElement('template');
+    html = html.trim(); // Never return a text node of whitespace as the result
+    template.innerHTML = html;
+    return template.content.firstChild;
+  }
+
+  function newUserAlert(email, password){
+    const htmlStr = `<div class="alert alert-primary" role="alert">
+      User created, email: ${email}, password: ${password}
+    </div>`
+    return htmlToElement(htmlStr)
+  }
+
+  async function handle(event) {
+    event.preventDefault()
+    const formData = new FormData(createAccountForm)
+
+    fetch('/admin/users/create', { 
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ email: formData.get('email')
+    })})
+    .then(response => response.json())
+    .then(data => {
+      createdUserContainer.appendChild(newUserAlert(data.email, data.password))
+    })
+    .catch(function(err) {
+      alert(err)
+    });
+  }
+
+  createAccountForm.addEventListener('submit', handle)
+</script>
 <script>
   const editAccountForm = document.getElementById('edit-account-form')
   async function editAccount(event) {

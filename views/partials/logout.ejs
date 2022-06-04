@@ -1,0 +1,15 @@
+<script type="module">
+    import { getAuth, signOut } from 'https://www.gstatic.com/firebasejs/9.8.2/firebase-auth.js'
+
+    function logout() {
+        console.log('logout')
+        // event.preventDefault()
+        signOut(getAuth()).then(() => {
+            location.reload();
+        }).catch((error) => {
+            console.error(error)
+        });
+    }
+
+    window.logout = logout
+</script>

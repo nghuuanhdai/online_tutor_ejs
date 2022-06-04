@@ -3,6 +3,8 @@ const router = express.Router()
 const Course = require('../models/course');
 const Lecture = require('../models/lecture');
 const Profile = require('../models/profile');
+const firebaseAdmin = require('firebase-admin');
+const passGen = require('generate-password')
 
 router.post('/course/create', async (req, res)=>{
     const newCourse = new Course({title: req.body.title})
@@ -47,14 +49,34 @@ router.post('/users/edit', async (req, res)=>{
 })
 
 router.get('/users', async (req, res)=>{
-    if(!req.context.profile?.admin)
-        return res.status(403).end()
-    
     res.render('pages/users', {
         ...req.context,
     })
 })
 
+router.post('/users/create', async (req, res)=>{
+    const password = passGen.generate({
+        length: 20
+    })
+    firebaseAdmin.auth().createUser({
+        email: req.body.email,
+        password: password 
+    })
+    .then((userRecord)=>{
+        const newProfile = new Profile({email: req.body.email})
+        newProfile.save()
+        .then(saveDoc => { 
+            res.status(200).json({email: req.body.email, password: password})
+        })
+        .catch(err=>{
+            firebaseAdmin.auth().deleteUser(userRecord.uid)
+            .finally(()=> res.status(500).end())
+        })
+    })
+    .catch(err=>{
+        res.status(500).end()
+    })
+})
 
 router.get('/users/:id', async (req, res)=>{
     const profile = await Profile.findById(req.params.id)
