@@ -31,6 +31,7 @@
     <% if (profile.admin) { %>
         <div class="card">
             <form id="course-form" class="card-body">
+                <h3>Update course</h3>
                 <div class="form-group">
                 <label for="title">Title</label>
                 <input name="title" type="text" class="form-control" id="title" value="<%= course.title %> ">
@@ -45,6 +46,7 @@
         </div>
         <div class="card">
             <form id="lecture-form" class="card-body">
+                <h3>New lecture</h3>
                 <div class="form-group">
                 <label for="title">Title</label>
                 <input name="title" type="text" class="form-control" id="title">

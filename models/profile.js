@@ -3,7 +3,8 @@ var Schema = mongoose.Schema;
 
 var ProfileSchema = new Schema({
     admin: Boolean,
-    email: String
+    email: {type: String, unique: true, index: true},
+    courses: [mongoose.ObjectId]
 });
 
 

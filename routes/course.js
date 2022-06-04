@@ -6,7 +6,7 @@ const Lecture = require('../models/lecture');
 router.get('/', async (req, res)=>{
     var courses = await Course.find({}).exec();
     courses = courses.map(course => ({id: course._id.toString(), title: course.title }))
-    const myCourses = courses;
+    const myCourses = await Course.find({_id: {$in: req.context.profile.courses }}).exec();
     res.render('pages/course', {
         ...req.context,
         courses: courses,

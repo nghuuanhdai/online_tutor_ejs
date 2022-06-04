@@ -61,6 +61,7 @@
     <% if (profile.admin) { %>
         <div class="card">
             <form id="lecture-form" class="card-body">
+                <h3>Update lecture</h3>
                 <div class="form-group">
                 <label for="title">Title</label>
                 <input name="title" type="text" class="form-control" id="title" value="<%= lecture.title %> ">
@@ -75,6 +76,7 @@
         </div>
         <div class="card">
             <form id="video-form" class="card-body">
+                <h3>Upload video</h3>
                 <div class="form-group">
                     <label for="video">Video</label>
                     <input name="video" type="file" accept=".mp4" class="form-control-file" id="video">

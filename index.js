@@ -13,7 +13,6 @@ const authRoute = require('./routes/auth')
 const courseRoute = require('./routes/course')
 const lectureRoute = require('./routes/lecture')
 const adminApiRoute = require('./routes/adminApi')
-const usersRoute = require('./routes/users')
 const uploadApiRoute = require('./routes/uploadApi')
 
 const firebaseAdmin = require('firebase-admin');
@@ -63,7 +62,6 @@ app.use('/users', withAuth)
 app.use('/auth', authRoute)
 app.use('/course', courseRoute)
 app.use('/lecture', lectureRoute)
-app.use('/users', usersRoute)
 
 app.get('/', (req, res)=> {res.redirect(307, '/course')})
 

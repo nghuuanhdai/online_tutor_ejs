@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include('../partials/head'); %>
+</head>
+<body class="container">
+
+<header>
+  <%- include('../partials/header'); %>
+  <%- include('../partials/util'); %>
+</header>
+
+<main>
+  <h1><%= user.email %> </h1>
+  <h2>User courses</h2>
+  <ul class="list-group">
+    <% userCourses.forEach(course => { %>
+        <li class="list-group-item row">
+            <button type="button" class="btn btn-danger" onclick="removeCourse('<%= course.id %>')">-</button>
+            <a href="/course/<%= course.id %>"><%= course.title %> </a>
+        </li>
+    <% }) %>
+  </ul>
+  <h2>Courses</h2>
+  <ul class="list-group">
+        <% courses.forEach(course => { %>
+            <li class="list-group-item row">
+                <button type="button" class="btn btn-success" onclick="addCourse('<%= course.id %>')">+</button>
+                <a href="/course/<%= course.id %>"><%= course.title %> </a>
+            </li>
+        <% }) %>
+  </ul>
+</div>
+</main>
+
+<script>
+    async function addCourse(courseId) {
+        var res = await fetch('/admin/users/<%=user.id%>/addcourse',{
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ courseId: courseId})
+        })
+        console.log(res)
+        location.reload();
+    }
+    async function removeCourse(courseId) {
+        var res = await fetch('/admin/users/<%=user.id%>/removecourse',{
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ courseId: courseId})
+        })
+        console.log(res)
+        location.reload();
+    }
+</script>
+
+<footer>
+  <%- include('../partials/footer'); %>
+</footer>
+
+<%- include('../partials/firebase'); %>
+</body>
+</html>

@@ -11,7 +11,26 @@
 </header>
 
 <main>
-    
+  <div class="card">
+    <form id="create-account-form" class="card-body">
+      <h3>Create account</h3>
+      <div class="form-group">
+      <label for="exampleInputEmail1">Email address</label>
+      <input name="email" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+      </div>
+      <button type="submit" class="btn btn-primary">Create Account</button>
+    </form>
+  </div>
+  <div class="card">
+    <form id="edit-account-form" class="card-body">
+      <h3>Edit account</h3>
+      <div class="form-group">
+      <label for="exampleInputEmail1">Email address</label>
+      <input name="email" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+      </div>
+      <button type="submit" class="btn btn-primary">Edit Account</button>
+    </form>
+  </div>
 </main>
 
 <footer>
@@ -19,5 +38,28 @@
 </footer>
 
 <%- include('../partials/firebase'); %>
+<script>
+  const editAccountForm = document.getElementById('edit-account-form')
+  async function editAccount(event) {
+    event.preventDefault()
+    const formData = new FormData(editAccountForm)
+
+    fetch('/admin/users/edit', { 
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ email: formData.get('email')
+    })})
+    .then(response => response.json())
+    .then(data => {
+      window.location.href = `/admin/users/${data.userId}`
+    })
+    .catch(function(err) {
+      alert(err)
+    });
+  }
+  editAccountForm.addEventListener('submit', editAccount)
+</script>
 </body>
 </html>

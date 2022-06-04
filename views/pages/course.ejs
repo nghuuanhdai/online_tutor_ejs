@@ -11,30 +11,49 @@
 </header>
 
 <main>
-  <h1>My courses</h1>
-  <ul class="list-group">
+  <h2>My courses</h2>
+  <ul class="d-flex flex-wrap" style="padding: 0px;">
     <% myCourses.forEach(course => { %>
-      <li class="list-group-item">
-        <a href="/course/<%= course.id %>" class="nav-link"><%= course.title %> </a>
-      </li>
+      <div class="p-2">
+        <a href="/course/<%= course.id %>">
+          <div class="card" style="width: 18rem;">
+            <object data="..." type="image/png" class="card-img-top">
+              <img class="card-img-top" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAMFBMVEXp7vG6vsG3u77s8fTCxsnn7O/f5OfFyczP09bM0dO8wMPk6ezY3eDd4uXR1tnJzdBvAX/cAAACVElEQVR4nO3b23KDIBRA0ShGU0n0//+2KmO94gWZ8Zxmr7fmwWEHJsJUHw8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAwO1MHHdn+L3rIoK6eshsNJ8kTaJI07fERPOO1Nc1vgQm2oiBTWJ+d8+CqV1heplLzMRNonED+4mg7L6p591FC+133/xCRNCtd3nL9BlxWP++MOaXFdEXFjZ7r8D9l45C8y6aG0cWtP/SUGhs2d8dA/ZfGgrzYX+TVqcTNRRO9l+fS5eSYzQs85psUcuzk6igcLoHPz2J8gvzWaH/JLS+95RfOD8o1p5CU5R7l5LkfKEp0mQ1UX7hsVXqDpRrifILD/3S9CfmlUQFhQfuFu0STTyJ8gsP3PH7GVxN1FC4t2sbBy4TNRTu7LyHJbqaqKFw+/Q0ncFloo7CjRPwMnCWqKXQZ75El4nKC9dmcJaou9AXOE5UXbi+RGeJygrz8Uf+GewSn9uXuplnWDZJ7d8f24F/s6iq0LYf9olbS3Q8i5oKrRu4S9ybwaQ/aCkqtP3I28QDgeoK7TBya/aXqL5COx67PTCD2grtdOwH+pQV2r0a7YVBgZoKwwIVFQYG6ikMDVRTGByopjD8ATcKb0UhhRTe77sKs2DV7FKSjId18TUEBYVyLhUThWfILHTDqmI85/2RWWjcE/bhP6OD7maT3h20MHsA47JC3PsW0wcwLhv9t0OOPOIkCn21y2bXXwlyylxiYMPk1SuCSmpfK8bNQvIrpAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwNX4BCbAju9/X67UAAAAASUVORK5CYII=" alt="<%= course.title %>">
+            </object>
+            <div class="card-body">
+              <p class="card-text"><%= course.title %></p>
+            </div>
+          </div>
+        </a>
+    </div>
     <% }) %>
   </ul>
-  <h1>Courses</h1>
-  <ul class="list-group">
+  <h2>Courses</h2>
+  <ul class="d-flex flex-wrap" style="padding: 0px;">
       <% courses.forEach(course => { %>
-          <li class="list-group-item">
-              <a href="/course/<%= course.id %>" class="nav-link"><%= course.title %> </a>
-          </li>
+          <div class="p-2">
+              <a href="/course/<%= course.id %>">
+                <div class="card" style="width: 18rem;">
+                  <object data="..." type="image/png" class="card-img-top">
+                    <img class="card-img-top" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAMFBMVEXp7vG6vsG3u77s8fTCxsnn7O/f5OfFyczP09bM0dO8wMPk6ezY3eDd4uXR1tnJzdBvAX/cAAACVElEQVR4nO3b23KDIBRA0ShGU0n0//+2KmO94gWZ8Zxmr7fmwWEHJsJUHw8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAwO1MHHdn+L3rIoK6eshsNJ8kTaJI07fERPOO1Nc1vgQm2oiBTWJ+d8+CqV1heplLzMRNonED+4mg7L6p591FC+133/xCRNCtd3nL9BlxWP++MOaXFdEXFjZ7r8D9l45C8y6aG0cWtP/SUGhs2d8dA/ZfGgrzYX+TVqcTNRRO9l+fS5eSYzQs85psUcuzk6igcLoHPz2J8gvzWaH/JLS+95RfOD8o1p5CU5R7l5LkfKEp0mQ1UX7hsVXqDpRrifILD/3S9CfmlUQFhQfuFu0STTyJ8gsP3PH7GVxN1FC4t2sbBy4TNRTu7LyHJbqaqKFw+/Q0ncFloo7CjRPwMnCWqKXQZ75El4nKC9dmcJaou9AXOE5UXbi+RGeJygrz8Uf+GewSn9uXuplnWDZJ7d8f24F/s6iq0LYf9olbS3Q8i5oKrRu4S9ybwaQ/aCkqtP3I28QDgeoK7TBya/aXqL5COx67PTCD2grtdOwH+pQV2r0a7YVBgZoKwwIVFQYG6ikMDVRTGByopjD8ATcKb0UhhRTe77sKs2DV7FKSjId18TUEBYVyLhUThWfILHTDqmI85/2RWWjcE/bhP6OD7maT3h20MHsA47JC3PsW0wcwLhv9t0OOPOIkCn21y2bXXwlyylxiYMPk1SuCSmpfK8bNQvIrpAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwNX4BCbAju9/X67UAAAAASUVORK5CYII=" alt="<%= course.title %>">
+                  </object>
+                  <div class="card-body">
+                    <p class="card-text"><%= course.title %></p>
+                  </div>
+                </div>
+              </a>
+          </div>
       <% }) %>
   </ul>
 <% if (profile.admin) { %>
   <div class="card">
     <form id="course-form" class="card-body">
-        <div class="form-group">
-        <label for="title">Title</label>
-        <input name="title" type="text" class="form-control" id="title">
-        </div>
-        <button type="submit" class="btn btn-primary">Create course</button>
+      <h3>New course</h3>
+      <div class="form-group">
+      <label for="title">Title</label>
+      <input name="title" type="text" class="form-control" id="title">
+      </div>
+      <button type="submit" class="btn btn-primary">Create course</button>
     </form>
   </div>
 <% } %>
