@@ -11,19 +11,6 @@
     <%- include('../partials/utils_style'); %>
     <link href="https://cdn.quilljs.com/1.0.0/quill.snow.css" rel="stylesheet" />
     <style>
-        .vimeo-full-width {
-            padding: 56.25% 0 0 0;
-            position: relative;
-        }
-
-        .vimeo-full-width iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-        }
-
         .bar-wrap {
             padding: 6px;
             margin-top: 50px;
@@ -39,14 +26,78 @@
             border-radius: 100px;
             box-shadow: inset -1px -1px 10px rgb(0 0 0 / .5);
         }
+
+        .video-container{
+            display: flex;
+            flex-wrap: wrap;
+            align-items: flex-start;
+        }
+
+        .video{
+            width: calc(100% - 20rem);
+        }
+
+        .check-list{
+            width: 20rem;
+            overflow: scroll;
+            max-height: 20rem;
+        }
+
+        @media screen and (min-width: 1200px){
+            .check-list{
+                max-height: 30rem;
+            }
+        }
+
+        @media screen and (max-width: 987px) {
+            .video{
+                width: 100%;
+            }
+
+            .check-list{
+                width: 100%;
+            }
+        }
+
+        .checkbox-round {
+            width: 1em;
+            height: 1em;
+            background-color: white;
+            border-radius: 50%;
+            vertical-align: middle;
+            border: 1px solid #ddd;
+            appearance: none;
+            -webkit-appearance: none;
+            outline: none;
+            cursor: pointer;
+        }
+
+        .checkbox-round:checked {
+            background-color: rgb(70, 135, 221);
+        }
     </style>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 </header>
 
 <main class="container">
     <h4 class="row nav-link"><a href="/course/<%= course.id %>" style="color:#6b6b6b"><%= course.title %> </a>><%= lecture.title %> </h4>
-    <div class="vimeo-full-width">
-        <iframe src="https://player.vimeo.com/video/<%= lecture.videoId %> " frameborder="0" webkitallowfullscreen="true" mozallowfullscreen="true" allowFullscreen></iframe>
+    
+    <div class="video-container">
+        <div class="embed-responsive embed-responsive-16by9 video">
+            <iframe class="embed-responsive-item" src="https://player.vimeo.com/video/<%= lecture.videoId %> " frameborder="0" webkitallowfullscreen="true" mozallowfullscreen="true" allowFullscreen></iframe>
+        </div>
+        <ul class="list-group check-list" id="check-list">
+            <% milestoneData.forEach(milestone => { %>
+                <li class="list-group-item"> 
+                    <div class="checkbox checkbox-primary checkbox-circle">
+                        <input onclick="handleMilestone('<%= milestone.id %>', '<%- profile._id.toString() %>', this)" id= "milestone_<%= milestone.id %>"  type="checkbox" <%- milestone.checked?'checked':'' %> class="checkbox-round"/>
+                        <label for= "milestone_<%= milestone.id %>">
+                            <%= milestone.text %> 
+                        </label>
+                    </div>
+                </li>
+            <% }) %>
+        </ul>
     </div>
 
     <script src="https://player.vimeo.com/api/player.js"></script>
@@ -73,6 +124,16 @@
                 <div id="editor" style="height: '25rem'"></div>
                 </br>
                 <button type="submit" class="btn btn-primary">Update</button>
+            </form>
+        </div>
+        <div class="card">
+            <form id="milestone-form" class="card-body">
+                <h3>New milestone</h3>
+                <div class="form-group">
+                <label for="text">Text</label>
+                <input name="text" type="text" class="form-control" id="text">
+                </div>
+                <button type="submit" class="btn btn-primary">Create milestone</button>
             </form>
         </div>
         <div class="card">
@@ -117,7 +178,40 @@
     descriptionRender.innerHTML  = renderEditor.root.innerHTML ;
 </script>
 
+<script>
+    function handleMilestone(id, user_id, cb) {
+        console.log(`milestone: ${id}, user ${user_id}, checked: ${cb.checked}`)
+        fetch('/lecture/<%=lecture.id%>/usermilestone',{
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ 
+                milestoneId: id,
+                userId: user_id,
+                checked: cb.checked
+            })
+        })
+    }
+</script>
+
 <% if (profile.admin) { %>
+<script>
+    const milestoneForm = document.getElementById("milestone-form")
+    async function newMilestone(event) {
+        event.preventDefault()
+        const formData = new FormData(milestoneForm)
+        var res = await fetch('/admin/lectures/<%=lecture.id%>/milestone/create',{
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ text: formData.get('text')})
+        })
+        location.reload();
+    }
+    milestoneForm.addEventListener('submit', newMilestone)
+</script>
 <script>
     const descriptionInput = document.getElementById("description")
     var toolbarOptions = [

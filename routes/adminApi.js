@@ -4,7 +4,8 @@ const Course = require('../models/course');
 const Lecture = require('../models/lecture');
 const Profile = require('../models/profile');
 const firebaseAdmin = require('firebase-admin');
-const passGen = require('generate-password')
+const passGen = require('generate-password');
+const LectureMileStone = require('../models/lectureMilestone');
 
 router.post('/course/create', async (req, res)=>{
     const newCourse = new Course({title: req.body.title})
@@ -127,6 +128,15 @@ router.post('/users/:id/removecourse', async (req, res)=>{
     user.courses = user.courses.filter(c=>c.toString()!==course._id.toString())
     await user.save()
     res.status(200).json({userId: user._id.toString()})
+})
+
+router.post('/lectures/:id/milestone/create', async (req, res)=>{
+    const lecture = await Lecture.findById(req.params.id)
+    if (!lecture)
+        return res.status(404).end()
+    const newMilestone = new LectureMileStone({lectureId: lecture._id, text: req.body.text})
+    await newMilestone.save()
+    res.status(200).end()
 })
 
 module.exports = router
