@@ -8,7 +8,7 @@ router.get('/', async (req, res)=>{
         return courses.map(course => ({id: course._id.toString(), title: course.title, imageUrl: course.thumbnailUrl??'/' }))
     }
     const courses = transformCourseObject(await Course.find({}).exec());
-    const myCourses = transformCourseObject(await Course.find({_id: {$in: req.context.profile.courses }}).exec());
+    const myCourses = transformCourseObject(await Course.find({_id: {$in: req.context.profile?.courses??[] }}).exec());
     res.render('pages/course', {
         ...req.context,
         courses: courses,
@@ -26,7 +26,7 @@ router.get('/:id', async (req, res)=>{
         return
     }
     const lectures = await Lecture.find({courseId: course._id}).exec()
-    const canAccess = req.context.profile.courses.filter(c => c.toString()=== course._id.toString()).length > 0
+    const canAccess = (req.context.profile?.courses.filter(c => c.toString()=== course._id.toString()).length??0 > 0) || (req.context.profile?.admin??false)
     res.render('pages/course_detail', {
         ...req.context,
         course: {id: course.id, title: course.title, description: course.description, imageUrl: course.thumbnailUrl??'/', canAccess: canAccess },

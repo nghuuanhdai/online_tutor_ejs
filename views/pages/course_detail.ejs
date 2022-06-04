@@ -41,7 +41,7 @@
         <% }) %>
     </ul>
     
-    <% if (profile.admin) { %>
+    <% if (profile?.admin) { %>
         <div class="card">
             <form id="course-form" class="card-body">
                 <h3>Update course</h3>
@@ -125,7 +125,7 @@
     descriptionRender.innerHTML  = renderEditor.root.innerHTML ;
 </script>
 
-<% if (profile.admin) { %>
+<% if (profile?.admin) { %>
 <script>
     const descriptionInput = document.getElementById("description")
     var toolbarOptions = [

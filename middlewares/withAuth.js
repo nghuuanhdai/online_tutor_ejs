@@ -5,7 +5,7 @@ function withAuth(req, res, next) {
     const token = req.cookies.firebase_token
     function handleError(err) {
         console.log(err)
-        res.redirect(307, '/auth/login')
+        next()
     }
     try {
         firebaseAdmin.auth().verifyIdToken(token)

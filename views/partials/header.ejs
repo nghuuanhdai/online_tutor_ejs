@@ -10,11 +10,15 @@
         <a class="nav-link" href="/admin/users">Users</a>
       </li>
        <% } %>
-       <% if (profile) { %> 
-      <li class="nav-item">
-         <a class="nav-link" href="#" onclick="logout()">Logout</a>
-         <%- include('../partials/logout'); %>
-        </li>
+        <% if (profile) { %> 
+          <li class="nav-item">
+            <a class="nav-link" href="#" onclick="logout()">Logout</a>
+            <%- include('../partials/logout'); %>
+          </li>
+        <% } else { %>
+          <li class="nav-item">
+            <a class="nav-link" href="/auth/login">Login</a>
+          </li>
         <% } %>
     </ul>
   </div>

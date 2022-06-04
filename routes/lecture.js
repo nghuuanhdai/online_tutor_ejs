@@ -6,7 +6,7 @@ const router = express.Router()
 router.get('/:id', async (req, res)=>{
     const lecture = await Lecture.findById(req.params.id)
     const course = await Course.findById(lecture.courseId)
-    const canAccess = req.context.profile.courses.filter(c => c.toString()=== course._id.toString()).length > 0
+    const canAccess = (req.context.profile?.courses.filter(c => c.toString()=== course._id.toString()).length??0 > 0) || (req.context.profile?.admin??false)
     if(!canAccess)
     {
         return res.redirect(307, '/')

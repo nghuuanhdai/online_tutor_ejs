@@ -5,9 +5,10 @@ const bodyParser = require('body-parser')
 const cookieParser = require("cookie-parser");
 
 const withAuth = require('./middlewares/withAuth')
-const withAuthAdminApi = require('./middlewares/withAuthAdminApi')
 const clientEnvVars = require('./middlewares/clientEnvVars')
 const requestContext = require('./middlewares/requestContext')
+const noAdminForbidden = require('./middlewares/noAdminForbidden')
+const noAuthRedirect = require('./middlewares/noAuthRedirect')
 
 const authRoute = require('./routes/auth')
 const courseRoute = require('./routes/course')
@@ -46,7 +47,9 @@ app.use('/static', express.static(path.join(__dirname, 'public')))
 app.use(cookieParser());
 app.use(requestContext)
 app.use(clientEnvVars)
-app.use('/admin', withAuthAdminApi)
+app.use(withAuth)
+
+app.use('/admin', noAdminForbidden)
 app.use('/admin/upload', uploadApiRoute)
 
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -55,9 +58,7 @@ app.use('/admin', adminApiRoute)
 
 app.set("view engine", "ejs")
 
-app.use('/course', withAuth)
-app.use('/lecture', withAuth)
-app.use('/users', withAuth)
+app.use('/lecture', noAuthRedirect)
 
 app.use('/auth', authRoute)
 app.use('/course', courseRoute)

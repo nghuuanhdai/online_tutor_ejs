@@ -12,6 +12,7 @@
 </header>
 
 <main class="container">
+  <% if (profile) { %>
   <h4>My courses</h4>
   <div class="line"></div>
   <ul class="d-flex flex-wrap" style="padding: 0px;">
@@ -30,6 +31,7 @@
     </div>
     <% }) %>
   </ul>
+  <% } %>
   <h4>Courses</h4>
   <div class="line"></div>
   <ul class="d-flex flex-wrap" style="padding: 0px;">
@@ -48,7 +50,7 @@
           </div>
       <% }) %>
   </ul>
-<% if (profile.admin) { %>
+<% if (profile?.admin) { %>
   <div class="card">
     <form id="course-form" class="card-body">
       <h3>New course</h3>
@@ -68,7 +70,7 @@
 </footer>
 
 <%- include('../partials/firebase'); %>
-<% if (profile.admin) { %>
+<% if (profile?.admin) { %>
 <script>
   const courseForm = document.getElementById('course-form')
   async function createCourse(event) {
