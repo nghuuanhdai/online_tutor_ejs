@@ -43,7 +43,7 @@
 </header>
 
 <main>
-    <h2><%= lecture.title %> </h2>
+    <h2><a href="/course/<%= course.id %>" class="nav-link"><%= course.title %> </a>><%= lecture.title %> </h2>
     <div class="vimeo-full-width">
         <iframe src="https://player.vimeo.com/video/<%= lecture.videoId %> " frameborder="0" webkitallowfullscreen="true" mozallowfullscreen="true" allowFullscreen></iframe>
     </div>
@@ -60,7 +60,7 @@
     
     <% if (profile.admin) { %>
         <div class="card">
-            <form id="info-form" class="card-body">
+            <form id="lecture-form" class="card-body">
                 <div class="form-group">
                 <label for="title">Title</label>
                 <input name="title" type="text" class="form-control" id="title" value="<%= lecture.title %> ">
@@ -176,7 +176,7 @@
             return xhr;
         },
         type: 'POST',
-        url: "/admin/lecture/<%= lecture.id %>/video",
+        url: "/admin/upload/lecture/<%= lecture.id %>/video",
         data: formData,
         contentType: false,
         processData: false,
@@ -188,6 +188,22 @@
     }
 
     videoForm.addEventListener('submit', upload);
+</script>
+<script>
+    const lectureForm = document.getElementById("lecture-form")
+    async function updateLecture(event) {
+        event.preventDefault()
+        const formData = new FormData(lectureForm)
+        var res = await fetch('/admin/lecture/<%=lecture.id%>/update',{
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ title: formData.get('title'), description: formData.get('description')})
+        })
+        location.reload();
+    }
+    lectureForm.addEventListener('submit', updateLecture)
 </script>  
 <% } %>
 </body>

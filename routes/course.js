@@ -4,12 +4,13 @@ const Course = require('../models/course');
 const Lecture = require('../models/lecture');
 
 router.get('/', async (req, res)=>{
-    const courses = await Course.find({}).exec();
+    var courses = await Course.find({}).exec();
+    courses = courses.map(course => ({id: course._id.toString(), title: course.title }))
+    const myCourses = courses;
     res.render('pages/course', {
-        firebase_api_key: process.env.FIREBASE_PUBLIC_API_KEY,
-        firebase_auth_domain: process.env.FIREBASE_AUTH_DOMAIN,
-        firenase_project_id: process.env.FIREBASE_PROJECT_ID,
-        courses: courses.map(course => ({id: course._id.toString(), title: course.title }))
+        ...req.context,
+        courses: courses,
+        myCourses: myCourses
     })
 })
 
@@ -18,20 +19,15 @@ router.get('/:id', async (req, res)=>{
     if (course == null)
     {
         res.render('pages/404', {
-            firebase_api_key: process.env.FIREBASE_PUBLIC_API_KEY,
-            firebase_auth_domain: process.env.FIREBASE_AUTH_DOMAIN,
-            firenase_project_id: process.env.FIREBASE_PROJECT_ID,
+            ...req.context,
         })
         return
     }
     const lectures = await Lecture.find({courseId: course._id}).exec()
 
     res.render('pages/course_detail', {
-        firebase_api_key: process.env.FIREBASE_PUBLIC_API_KEY,
-        firebase_auth_domain: process.env.FIREBASE_AUTH_DOMAIN,
-        firenase_project_id: process.env.FIREBASE_PROJECT_ID,
+        ...req.context,
         course: {id: course.id, title: course.title, description: course.description },
-        profile: req.profile,
         lectures: lectures.map(lecture=>({id: lecture._id.toString(), title: lecture.title }))
     })
 })

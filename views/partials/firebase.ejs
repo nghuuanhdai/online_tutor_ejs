@@ -1,6 +1,6 @@
 <script type="module">
     import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.8.2/firebase-app.js'
-    import { getAuth } from 'https://www.gstatic.com/firebasejs/9.8.2/firebase-auth.js'
+    import { getAuth, setPersistence, browserSessionPersistence } from 'https://www.gstatic.com/firebasejs/9.8.2/firebase-auth.js'
 
     const firebaseConfig = {
         apiKey: "<%= firebase_api_key %>",
@@ -10,6 +10,16 @@
 
     const app = initializeApp(firebaseConfig);
     var sessionUser;
+
+    setPersistence(getAuth(), browserSessionPersistence)
+    .then(() => {
+    })
+    .catch((error) => {
+        // Handle Errors here.
+        const errorCode = error.code;
+        const errorMessage = error.message;
+    });
+
 
     getAuth().onIdTokenChanged(function(user){
         console.log('id token changed')

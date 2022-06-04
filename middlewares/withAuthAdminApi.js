@@ -9,20 +9,20 @@ function withAuthApi(req, res, next) {
     }
     firebaseAdmin.auth().verifyIdToken(token)
         .then(decodedIdToken => {
-            req.user = decodedIdToken
+            req.context.user = decodedIdToken
             const email = decodedIdToken.email
             Profile.findOne().where('email').equals(email).exec().then(profile=>{
                 if (!profile){
                     profile = new Profile({admin: false, email: email})
                     profile.save(err=>{
                         if(err) return handleError(err)
-                        req.profile = profile
+                        req.context.profile = profile
                         handleError('not admin')
                     })
                 }
                 else {
                     if(!profile.admin) return handleError('not admin')
-                    req.profile = profile
+                    req.context.profile = profile
                     next()
                 }
             }, 

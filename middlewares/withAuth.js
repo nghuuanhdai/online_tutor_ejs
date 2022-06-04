@@ -7,26 +7,30 @@ function withAuth(req, res, next) {
         console.log(err)
         res.redirect(307, '/auth/login')
     }
-    firebaseAdmin.auth().verifyIdToken(token)
+    try {
+        firebaseAdmin.auth().verifyIdToken(token)
         .then(decodedIdToken => {
-            req.user = decodedIdToken
+            req.context.user = decodedIdToken
             const email = decodedIdToken.email
             Profile.findOne().where('email').equals(email).exec().then(profile=>{
                 if (!profile){
                     profile = new Profile({admin: false, email: email})
                     profile.save(err=>{
                         if(err) return handleError(err)
-                        req.profile = profile
+                        req.context.profile = profile
                         next()
                     })
                 }
                 else {
-                    req.profile = profile
+                    req.context.profile = profile
                     next()
                 }
             }, 
             handleError)
         }, handleError)
+    } catch (error) {
+        handleError(error)
+    }
 }
 
 module.exports = withAuth

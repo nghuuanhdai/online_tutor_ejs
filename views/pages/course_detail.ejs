@@ -23,24 +23,35 @@
     <ul class="list-group">
         <% lectures.forEach(lecture => { %>
             <li class="list-group-item">
-                <a href="/lecture/<%= lecture.id %>"><%= lecture.title %> </a>
+                <a href="/lecture/<%= lecture.id %>" class="nav-link"><%= lecture.title %> </a>
             </li>
         <% }) %>
     </ul>
     
     <% if (profile.admin) { %>
-        <form id="login-form">
-            <div class="form-group">
-            <label for="title">Title</label>
-            <input name="title" type="text" class="form-control" id="title" value="<%= course.title %> ">
-            </div>
-            <div class="form-group">
-            <input name="description" type="hidden" class="form-control" id="description" value="<%= course.description %>">
-            </div>
-            <div id="editor" style="height: '25rem'"></div>
-            </br>
-            <button type="submit" class="btn btn-primary">Update</button>
-        </form>
+        <div class="card">
+            <form id="course-form" class="card-body">
+                <div class="form-group">
+                <label for="title">Title</label>
+                <input name="title" type="text" class="form-control" id="title" value="<%= course.title %> ">
+                </div>
+                <div class="form-group">
+                <input name="description" type="hidden" class="form-control" id="description" value="<%= course.description %>">
+                </div>
+                <div id="editor" style="height: '25rem'"></div>
+                </br>
+                <button type="submit" class="btn btn-primary">Update</button>
+            </form>
+        </div>
+        <div class="card">
+            <form id="lecture-form" class="card-body">
+                <div class="form-group">
+                <label for="title">Title</label>
+                <input name="title" type="text" class="form-control" id="title">
+                </div>
+                <button type="submit" class="btn btn-primary">Create lecture</button>
+            </form>
+        </div>
     <% } %>
     </div>
 </main>
@@ -100,6 +111,39 @@
     });
     editor.setContents(renderEditor.getContents());
 </script>    
+
+<script>
+    const courseForm = document.getElementById("course-form")
+    async function updateCourse(event) {
+        event.preventDefault()
+        const formData = new FormData(courseForm)
+        var res = await fetch('/admin/course/<%=course.id%>/update',{
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ title: formData.get('title'), description: formData.get('description')})
+        })
+        location.reload();
+    }
+    courseForm.addEventListener('submit', updateCourse);
+
+    const lectureForm = document.getElementById("lecture-form")
+    async function newLecture(event) {
+        event.preventDefault()
+        console.log('create lecture')
+        const formData = new FormData(lectureForm)
+        var res = await fetch('/admin/course/<%=course.id%>/lecture/create',{
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ title: formData.get('title')})
+        })
+        location.reload();
+    }
+    lectureForm.addEventListener('submit', newLecture)
+</script>
 <% } %>
 </body>
 </html>

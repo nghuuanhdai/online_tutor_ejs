@@ -11,14 +11,34 @@
 </header>
 
 <main>
-    <h1>Courses</h1>
-    <ul class="list-group">
-        <% courses.forEach(course => { %>
-            <li class="list-group-item">
-                <a href="/course/<%= course.id %>"><%= course.title %> </a>
-            </li>
-        <% }) %>
-    </ul>
+  <h1>My courses</h1>
+  <ul class="list-group">
+    <% myCourses.forEach(course => { %>
+      <li class="list-group-item">
+        <a href="/course/<%= course.id %>" class="nav-link"><%= course.title %> </a>
+      </li>
+    <% }) %>
+  </ul>
+  <h1>Courses</h1>
+  <ul class="list-group">
+      <% courses.forEach(course => { %>
+          <li class="list-group-item">
+              <a href="/course/<%= course.id %>" class="nav-link"><%= course.title %> </a>
+          </li>
+      <% }) %>
+  </ul>
+<% if (profile.admin) { %>
+  <div class="card">
+    <form id="course-form" class="card-body">
+        <div class="form-group">
+        <label for="title">Title</label>
+        <input name="title" type="text" class="form-control" id="title">
+        </div>
+        <button type="submit" class="btn btn-primary">Create course</button>
+    </form>
+  </div>
+<% } %>
+</div>
 </main>
 
 <footer>
@@ -26,5 +46,24 @@
 </footer>
 
 <%- include('../partials/firebase'); %>
+<% if (profile.admin) { %>
+<script>
+  const courseForm = document.getElementById('course-form')
+  async function createCourse(event) {
+    event.preventDefault()
+    const formData = new FormData(courseForm)
+    var res = await fetch('/admin/course/create',{
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ title: formData.get('title')})
+    })
+    console.log(res)
+    location.reload();
+  }
+  courseForm.addEventListener('submit', createCourse);
+</script>
+<% } %>
 </body>
 </html>

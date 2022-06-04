@@ -6,11 +6,15 @@ const cookieParser = require("cookie-parser");
 
 const withAuth = require('./middlewares/withAuth')
 const withAuthAdminApi = require('./middlewares/withAuthAdminApi')
+const clientEnvVars = require('./middlewares/clientEnvVars')
+const requestContext = require('./middlewares/requestContext')
 
 const authRoute = require('./routes/auth')
 const courseRoute = require('./routes/course')
 const lectureRoute = require('./routes/lecture')
 const adminApiRoute = require('./routes/adminApi')
+const usersRoute = require('./routes/users')
+const uploadApiRoute = require('./routes/uploadApi')
 
 const firebaseAdmin = require('firebase-admin');
 const mongoose = require('mongoose');
@@ -41,20 +45,25 @@ firebaseAdmin.initializeApp({
 app.use('/static', express.static(path.join(__dirname, 'public')))
 
 app.use(cookieParser());
+app.use(requestContext)
+app.use(clientEnvVars)
 app.use('/admin', withAuthAdminApi)
-app.use('/admin', adminApiRoute)
+app.use('/admin/upload', uploadApiRoute)
 
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
+app.use('/admin', adminApiRoute)
 
 app.set("view engine", "ejs")
 
 app.use('/course', withAuth)
 app.use('/lecture', withAuth)
+app.use('/users', withAuth)
 
 app.use('/auth', authRoute)
 app.use('/course', courseRoute)
 app.use('/lecture', lectureRoute)
+app.use('/users', usersRoute)
 
 app.get('/', (req, res)=> {res.redirect(307, '/course')})
 
