@@ -15,6 +15,7 @@ const courseRoute = require('./routes/course')
 const lectureRoute = require('./routes/lecture')
 const adminApiRoute = require('./routes/adminApi')
 const uploadApiRoute = require('./routes/uploadApi')
+const profileRoute = require('./routes/profile')
 
 const firebaseAdmin = require('firebase-admin');
 const mongoose = require('mongoose');
@@ -59,10 +60,12 @@ app.use('/admin', adminApiRoute)
 app.set("view engine", "ejs")
 
 app.use('/lecture', noAuthRedirect)
+app.use('/profile', noAuthRedirect)
 
 app.use('/auth', authRoute)
 app.use('/course', courseRoute)
 app.use('/lecture', lectureRoute)
+app.use('/profile', profileRoute)
 
 app.get('/', (req, res)=> {res.redirect(307, '/course')})
 

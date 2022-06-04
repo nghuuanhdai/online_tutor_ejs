@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include('../partials/head'); %>
+</head>
+<body>
+
+<header>
+  <%- include('../partials/header'); %>
+  <%- include('../partials/util'); %>
+  <%- include('../partials/utils_style'); %>
+</header>
+
+<main class="container">
+    <h3>Profile</h3>
+    <div class="line"></div>
+    <dl class="row">
+        <dt class="col-sm-3">Email</dt>
+        <dd class="col-sm-9"><%= user.email %> </dd>
+      
+        <dt class="col-sm-3">Password</dt>
+        <dd class="col-sm-9">
+            <div class="input-group mb-3">
+                <div>
+                    <input id="pass-1" type="password" placeholder="password" class="form-control" aria-label="new password" aria-describedby="new-password">
+                    <input id="pass-2" type="password" placeholder="repeat password" class="form-control" aria-label="confirm new password" aria-describedby="confirm-new-password">
+                </div>
+                
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="button" id="change-pass-btn">Change Password</button>
+                </div>
+            </div>
+            <div class="alert alert-danger" role="alert" style="display: none" id="alert">
+                A simple danger alert—check it out!
+            </div>
+            <div class="alert alert-primary" role="alert" style="display: none" id="info">
+                A simple primary alert—check it out!
+            </div>
+        </dd>
+      </dl>
+</main>
+
+<footer>
+  <%- include('../partials/footer'); %>
+</footer>
+<script type="module">
+    import { getAuth, updatePassword } from 'https://www.gstatic.com/firebasejs/9.8.2/firebase-auth.js'
+    
+    const changePassBtn = document.getElementById('change-pass-btn')
+    const pass1 = document.getElementById('pass-1')
+    const pass2 = document.getElementById('pass-2')
+
+    function showMessage(msg, isAlert) {
+        const alertE = document.getElementById('alert')
+        const infoE = document.getElementById('info')
+
+        alertE.style.display = isAlert?'block':'none'
+        infoE.style.display = isAlert?'none':'block'
+
+        alertE.innerText = msg
+        infoE.innerText = msg
+    }
+
+    async function change_pass(event) {
+        event.preventDefault()
+        const pass1Val = pass1.value
+        const pass2Val = pass2.value
+        if (pass1Val !== pass2Val)
+        {
+            showMessage('password must match', true)
+            return
+        }
+
+        const auth = getAuth();
+
+        const user = auth.currentUser;
+        updatePassword(user, pass1Val).then(() => {
+            showMessage("password updated", false)
+        }).catch((error) => {
+            showMessage(error, true)
+        });
+    }
+
+    changePassBtn.addEventListener('click', change_pass)
+
+</script>
+<%- include('../partials/firebase'); %>
+</body>
+</html>
