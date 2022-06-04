@@ -4,9 +4,11 @@ const Course = require('../models/course');
 const Lecture = require('../models/lecture');
 
 router.get('/', async (req, res)=>{
-    var courses = await Course.find({}).exec();
-    courses = courses.map(course => ({id: course._id.toString(), title: course.title }))
-    const myCourses = await Course.find({_id: {$in: req.context.profile.courses }}).exec();
+    function transformCourseObject(courses) {
+        return courses.map(course => ({id: course._id.toString(), title: course.title, imageUrl: course.thumbnailUrl??'...' }))
+    }
+    const courses = transformCourseObject(await Course.find({}).exec());
+    const myCourses = transformCourseObject(await Course.find({_id: {$in: req.context.profile.courses }}).exec());
     res.render('pages/course', {
         ...req.context,
         courses: courses,
@@ -27,7 +29,7 @@ router.get('/:id', async (req, res)=>{
 
     res.render('pages/course_detail', {
         ...req.context,
-        course: {id: course.id, title: course.title, description: course.description },
+        course: {id: course.id, title: course.title, description: course.description, imageUrl: course.thumbnailUrl??'...' },
         lectures: lectures.map(lecture=>({id: lecture._id.toString(), title: lecture.title }))
     })
 })

@@ -22,6 +22,16 @@ router.post('/course/:id/update', async (req, res)=>{
     res.status(200).end()
 })
 
+router.post('/course/:id/thumbnail', async (req, res)=>{
+    const course = await Course.findById(req.params.id)
+    if(!course)
+        return res.status(404).end()
+    course.thumbnailUrl = req.body.url
+    await course.save()
+    res.status(200).end()
+})
+
+
 router.post('/course/:id/lecture/create', async (req, res)=>{
     const course = await Course.findById(req.params.id)
     if(!course)
