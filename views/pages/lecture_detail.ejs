@@ -3,7 +3,7 @@
 <head>
   <%- include('../partials/head'); %>
 </head>
-<body class="container">
+<body>
 
 <header>
     <%- include('../partials/header'); %>
@@ -42,7 +42,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 </header>
 
-<main>
+<main class="container">
     <h2><a href="/course/<%= course.id %>" class="nav-link"><%= course.title %> </a>><%= lecture.title %> </h2>
     <div class="vimeo-full-width">
         <iframe src="https://player.vimeo.com/video/<%= lecture.videoId %> " frameborder="0" webkitallowfullscreen="true" mozallowfullscreen="true" allowFullscreen></iframe>
