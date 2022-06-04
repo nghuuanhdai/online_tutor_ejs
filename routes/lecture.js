@@ -6,6 +6,12 @@ const router = express.Router()
 router.get('/:id', async (req, res)=>{
     const lecture = await Lecture.findById(req.params.id)
     const course = await Course.findById(lecture.courseId)
+    const canAccess = req.context.profile.courses.filter(c => c.toString()=== course._id.toString()).length > 0
+    if(!canAccess)
+    {
+        return res.redirect(307, '/')
+    }
+
     if (lecture == null)
     {
         res.render('pages/404', {

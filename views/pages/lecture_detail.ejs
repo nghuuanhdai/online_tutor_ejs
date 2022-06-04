@@ -8,6 +8,7 @@
 <header>
     <%- include('../partials/header'); %>
     <%- include('../partials/util'); %>
+    <%- include('../partials/utils_style'); %>
     <link href="https://cdn.quilljs.com/1.0.0/quill.snow.css" rel="stylesheet" />
     <style>
         .vimeo-full-width {
@@ -43,7 +44,7 @@
 </header>
 
 <main class="container">
-    <h2><a href="/course/<%= course.id %>" class="nav-link"><%= course.title %> </a>><%= lecture.title %> </h2>
+    <h4 class="row nav-link"><a href="/course/<%= course.id %>" style="color:#6b6b6b"><%= course.title %> </a>><%= lecture.title %> </h4>
     <div class="vimeo-full-width">
         <iframe src="https://player.vimeo.com/video/<%= lecture.videoId %> " frameborder="0" webkitallowfullscreen="true" mozallowfullscreen="true" allowFullscreen></iframe>
     </div>

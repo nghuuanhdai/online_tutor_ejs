@@ -26,10 +26,10 @@ router.get('/:id', async (req, res)=>{
         return
     }
     const lectures = await Lecture.find({courseId: course._id}).exec()
-
+    const canAccess = req.context.profile.courses.filter(c => c.toString()=== course._id.toString()).length > 0
     res.render('pages/course_detail', {
         ...req.context,
-        course: {id: course.id, title: course.title, description: course.description, imageUrl: course.thumbnailUrl??'/' },
+        course: {id: course.id, title: course.title, description: course.description, imageUrl: course.thumbnailUrl??'/', canAccess: canAccess },
         lectures: lectures.map(lecture=>({id: lecture._id.toString(), title: lecture.title }))
     })
 })
