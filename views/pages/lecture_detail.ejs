@@ -73,14 +73,15 @@
         }
 
         .checkbox-round:checked {
-            background-color: rgb(70, 135, 221);
+            background-color: var(--accent-color);
+            border-width: 4px;
         }
     </style>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 </header>
 
 <main class="container">
-    <h4 class="row nav-link"><a href="/course/<%= course.id %>" style="color:#6b6b6b"><%= course.title %> </a>><%= lecture.title %> </h4>
+    <h4 class="row nav-link" style="color: var(--accent-color);"><a href="/course/<%= course.id %>" style="color:#6b6b6b"><%= course.title %> </a>><%= lecture.title %> </h4>
     
     <div class="video-container">
         <div class="embed-responsive embed-responsive-16by9 video">
