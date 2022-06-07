@@ -2,6 +2,91 @@
 <html lang="en">
 <head>
   <%- include('../partials/head'); %>
+
+  <style>
+    .card-body{
+      background-color: #f8f8f8;
+    }
+    .card{
+      border-style: none;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    .card-title{
+      margin: 0;
+      color: #3e3e3e;
+      font-weight: 500;
+      font-size: 1rem;
+    }
+    .card-detail{
+      margin: 0;
+      color: #3e3e3e;
+      font-size: small;
+      font-size: 0.9rem;
+    }
+    .card-body{
+      padding: 10px;
+    }
+
+    .learn-more{
+      width: 100px;
+      height: 30px;
+      background-color: var(--accent-color);
+      color: white;
+      /* font-weight: bold; */
+      font-size: small;
+      line-height: 15px;
+      border-radius: 15px;
+    }
+    
+    .flex-gap{
+      gap: 10px;
+    }
+    .section-separator{
+      width: 100%;
+      height: 100px;
+      background-color: var(--accent-color);
+    }
+
+    h2{
+      font-weight: 700;
+      color: #3e3e3e;
+    }
+
+    .hero {
+      width: 100%;
+      height: 400px;
+      background:  var(--accent-color);
+      background: linear-gradient(0deg,  var(--accent-color) 0%, var(--accent-light) 100%);
+      display: flex;
+      align-items: center;
+    }
+
+    .hero h1{
+      font-weight: bold;
+      color: white;
+    }
+    .hero p{
+      color: white;
+    }
+
+    .course-card {
+      width: calc(100%/3 - 30px/3);
+    }
+
+    @media (max-width: 768px) { 
+      .course-card {
+        width: calc(100%/2 - 15px/2);
+      }
+    }
+
+    @media (max-width: 576px) { 
+      .course-card {
+        width: 100%;
+      }
+    }
+
+  </style>
 </head>
 <body>
 
@@ -11,45 +96,56 @@
   <%- include('../partials/utils_style.ejs'); %>
 </header>
 
-<main class="container">
+<main>
+  <div class="hero">
+    <div class="container">
+      <h1>ONLINE TUTOR</h1>
+      <p>Phone: 08xxxxxxxxx - Email: contact@gmail.com - Facebook: facebook.com/online-tutor</p>
+    </div>
+  </div>
   <% if (profile) { %>
-  <h4>My courses</h4>
-  <div class="line"></div>
-  <ul class="d-flex flex-wrap" style="padding: 0px;">
-    <% myCourses.forEach(course => { %>
-      <div class="p-2">
-        <a href="/course/<%= course.id %>" class="nav-link">
-          <div class="card" style="width: 18rem;">
-            <object data="<%= course.imageUrl %>" type="image/png" class="card-img-top"  style="height: 18rem; object-fit: cover;">
+  <div style="padding-top: 30px;" class="container">
+    <h2>My courses</h2>
+    <div class="line"></div>
+    <ul class="d-flex flex-wrap align-items-stretch flex-gap" style="padding: 0px; padding-top: 10px;">
+        <% myCourses.forEach(course => { %>
+          <div class="card course-card">
+            <object data="<%= course.imageUrl %>" type="image/png" class="card-img-top" style="height: 10rem; object-fit: cover;">
               <img class="card-img-top" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAMFBMVEXp7vG6vsG3u77s8fTCxsnn7O/f5OfFyczP09bM0dO8wMPk6ezY3eDd4uXR1tnJzdBvAX/cAAACVElEQVR4nO3b23KDIBRA0ShGU0n0//+2KmO94gWZ8Zxmr7fmwWEHJsJUHw8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAwO1MHHdn+L3rIoK6eshsNJ8kTaJI07fERPOO1Nc1vgQm2oiBTWJ+d8+CqV1heplLzMRNonED+4mg7L6p591FC+133/xCRNCtd3nL9BlxWP++MOaXFdEXFjZ7r8D9l45C8y6aG0cWtP/SUGhs2d8dA/ZfGgrzYX+TVqcTNRRO9l+fS5eSYzQs85psUcuzk6igcLoHPz2J8gvzWaH/JLS+95RfOD8o1p5CU5R7l5LkfKEp0mQ1UX7hsVXqDpRrifILD/3S9CfmlUQFhQfuFu0STTyJ8gsP3PH7GVxN1FC4t2sbBy4TNRTu7LyHJbqaqKFw+/Q0ncFloo7CjRPwMnCWqKXQZ75El4nKC9dmcJaou9AXOE5UXbi+RGeJygrz8Uf+GewSn9uXuplnWDZJ7d8f24F/s6iq0LYf9olbS3Q8i5oKrRu4S9ybwaQ/aCkqtP3I28QDgeoK7TBya/aXqL5COx67PTCD2grtdOwH+pQV2r0a7YVBgZoKwwIVFQYG6ikMDVRTGByopjD8ATcKb0UhhRTe77sKs2DV7FKSjId18TUEBYVyLhUThWfILHTDqmI85/2RWWjcE/bhP6OD7maT3h20MHsA47JC3PsW0wcwLhv9t0OOPOIkCn21y2bXXwlyylxiYMPk1SuCSmpfK8bNQvIrpAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwNX4BCbAju9/X67UAAAAASUVORK5CYII=" alt="<%= course.title %>">
             </object>
-            <div class="card-body">
-              <p class="card-text" style="color: #3e3e3e;  font-weight: bold;"><%= course.title %></p>
-            </div>
-          </div>
-        </a>
-    </div>
-    <% }) %>
-  </ul>
-  <% } %>
-  <h4>Courses</h4>
-  <div class="line"></div>
-  <ul class="d-flex flex-wrap" style="padding: 0px;">
-      <% courses.forEach(course => { %>
-          <div class="p-2">
-              <a href="/course/<%= course.id %>" class="nav-link">
-                <div class="card" style="width: 18rem">
-                  <object data="<%= course.imageUrl %>" type="image/png" class="card-img-top" style="height: 18rem; object-fit: cover;">
-                    <img class="card-img-top" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAMFBMVEXp7vG6vsG3u77s8fTCxsnn7O/f5OfFyczP09bM0dO8wMPk6ezY3eDd4uXR1tnJzdBvAX/cAAACVElEQVR4nO3b23KDIBRA0ShGU0n0//+2KmO94gWZ8Zxmr7fmwWEHJsJUHw8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAwO1MHHdn+L3rIoK6eshsNJ8kTaJI07fERPOO1Nc1vgQm2oiBTWJ+d8+CqV1heplLzMRNonED+4mg7L6p591FC+133/xCRNCtd3nL9BlxWP++MOaXFdEXFjZ7r8D9l45C8y6aG0cWtP/SUGhs2d8dA/ZfGgrzYX+TVqcTNRRO9l+fS5eSYzQs85psUcuzk6igcLoHPz2J8gvzWaH/JLS+95RfOD8o1p5CU5R7l5LkfKEp0mQ1UX7hsVXqDpRrifILD/3S9CfmlUQFhQfuFu0STTyJ8gsP3PH7GVxN1FC4t2sbBy4TNRTu7LyHJbqaqKFw+/Q0ncFloo7CjRPwMnCWqKXQZ75El4nKC9dmcJaou9AXOE5UXbi+RGeJygrz8Uf+GewSn9uXuplnWDZJ7d8f24F/s6iq0LYf9olbS3Q8i5oKrRu4S9ybwaQ/aCkqtP3I28QDgeoK7TBya/aXqL5COx67PTCD2grtdOwH+pQV2r0a7YVBgZoKwwIVFQYG6ikMDVRTGByopjD8ATcKb0UhhRTe77sKs2DV7FKSjId18TUEBYVyLhUThWfILHTDqmI85/2RWWjcE/bhP6OD7maT3h20MHsA47JC3PsW0wcwLhv9t0OOPOIkCn21y2bXXwlyylxiYMPk1SuCSmpfK8bNQvIrpAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwNX4BCbAju9/X67UAAAAASUVORK5CYII=" alt="<%= course.title %>">
-                  </object>
-                  <div class="card-body">
-                    <p class="card-text" style="color: #3e3e3e;  font-weight: bold;"><%= course.title %></p>
-                  </div>
-                </div>
+            <div class="card-body d-flex flex-row flex-wrap align-items-center">
+              <a href="/course/<%= course.id %>" class="mr-auto" style="width: 10rem;">
+                <h6 class="card-title"><%= course.title %></h6>
+                <!-- <p class="card-detail">Lectures: 6</p> -->
               </a>
-          </div>
-      <% }) %>
-  </ul>
+              <a href="/course/<%= course.id %>" class="btn btn-light learn-more">Learn more</a>
+            </div>
+        </div>
+        <% }) %>
+    </ul>
+  </div>
+  <div class="section-separator"></div>
+  <% } %>
+  <div style="padding-top: 30px;" class="container">
+    <h2>Courses</h2>
+    <div class="line"></div>
+    <ul class="d-flex flex-wrap align-items-stretch flex-gap" style="padding: 0px; padding-top: 10px;">
+        <% courses.forEach(course => { %>
+          <div class="card course-card">
+            <object data="<%= course.imageUrl %>" type="image/png" class="card-img-top" style="height: 10rem; object-fit: cover;">
+              <img class="card-img-top" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAMFBMVEXp7vG6vsG3u77s8fTCxsnn7O/f5OfFyczP09bM0dO8wMPk6ezY3eDd4uXR1tnJzdBvAX/cAAACVElEQVR4nO3b23KDIBRA0ShGU0n0//+2KmO94gWZ8Zxmr7fmwWEHJsJUHw8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAwO1MHHdn+L3rIoK6eshsNJ8kTaJI07fERPOO1Nc1vgQm2oiBTWJ+d8+CqV1heplLzMRNonED+4mg7L6p591FC+133/xCRNCtd3nL9BlxWP++MOaXFdEXFjZ7r8D9l45C8y6aG0cWtP/SUGhs2d8dA/ZfGgrzYX+TVqcTNRRO9l+fS5eSYzQs85psUcuzk6igcLoHPz2J8gvzWaH/JLS+95RfOD8o1p5CU5R7l5LkfKEp0mQ1UX7hsVXqDpRrifILD/3S9CfmlUQFhQfuFu0STTyJ8gsP3PH7GVxN1FC4t2sbBy4TNRTu7LyHJbqaqKFw+/Q0ncFloo7CjRPwMnCWqKXQZ75El4nKC9dmcJaou9AXOE5UXbi+RGeJygrz8Uf+GewSn9uXuplnWDZJ7d8f24F/s6iq0LYf9olbS3Q8i5oKrRu4S9ybwaQ/aCkqtP3I28QDgeoK7TBya/aXqL5COx67PTCD2grtdOwH+pQV2r0a7YVBgZoKwwIVFQYG6ikMDVRTGByopjD8ATcKb0UhhRTe77sKs2DV7FKSjId18TUEBYVyLhUThWfILHTDqmI85/2RWWjcE/bhP6OD7maT3h20MHsA47JC3PsW0wcwLhv9t0OOPOIkCn21y2bXXwlyylxiYMPk1SuCSmpfK8bNQvIrpAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwNX4BCbAju9/X67UAAAAASUVORK5CYII=" alt="<%= course.title %>">
+            </object>
+            <div class="card-body d-flex flex-row flex-wrap align-items-center">
+              <a href="/course/<%= course.id %>" class="mr-auto" style="width: 10rem;">
+                <h6 class="card-title"><%= course.title %></h6>
+                <!-- <p class="card-detail">Lectures: 6</p> -->
+              </a>
+              <a href="/course/<%= course.id %>" class="btn btn-light learn-more">Learn more</a>
+            </div>
+        </div>
+        <% }) %>
+    </ul>
+  </div>
 <% if (profile?.admin) { %>
   <div class="card">
     <form id="course-form" class="card-body">

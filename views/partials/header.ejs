@@ -1,13 +1,13 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="container d-flex align-items-start">
-    <a class="navbar-brand mr-auto p-2" href="/" style="color: rgb(70, 135, 221); padding: 0px; font-weight: bold;">Online Tutor</a>
+    <a class="navbar-brand mr-auto p-2" href="/" style="color: var(--accent-color); padding: 0px; font-weight: bold;">Online Tutor</a>
     <div class="p-2">
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav">
-          <a class="nav-item nav-link active" href="/course">Courses</a>
+          <a class="nav-item nav-link active" href="/course"><strong>Courses</strong></a>
           <% if (profile?.admin) { %>
             <a class="nav-item nav-link active" href="/admin/users">Users</a>
           <% } %>
