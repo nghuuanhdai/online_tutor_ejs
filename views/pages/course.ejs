@@ -44,8 +44,8 @@
     }
     .section-separator{
       width: 100%;
-      height: 100px;
-      background-color: var(--accent-color);
+      height: 1px;
+      background-color: #3e3e3e27;
     }
 
     h2{
@@ -97,12 +97,12 @@
 </header>
 
 <main>
-  <div class="hero">
+  <!-- <div class="hero">
     <div class="container">
       <h1>ONLINE TUTOR</h1>
       <p>Phone: 08xxxxxxxxx - Email: contact@gmail.com - Facebook: facebook.com/online-tutor</p>
     </div>
-  </div>
+  </div> -->
   <% if (profile) { %>
   <div style="padding-top: 30px;" class="container">
     <h2>My courses</h2>
@@ -124,7 +124,7 @@
         <% }) %>
     </ul>
   </div>
-  <div class="section-separator"></div>
+  <div class="section-separator container"></div>
   <% } %>
   <div style="padding-top: 30px;" class="container">
     <h2>Courses</h2>

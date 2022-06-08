@@ -1,22 +1,22 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg navbar-dark accent-gradient">
   <div class="container d-flex align-items-start">
-    <a class="navbar-brand mr-auto p-2" href="/" style="color: var(--accent-color); padding: 0px; font-weight: bold;">Online Tutor</a>
+    <a class="navbar-brand mr-auto p-2" href="/" style="color: white; padding: 0px; font-weight: bold;">Online Tutor</a>
     <div class="p-2">
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav">
-          <a class="nav-item nav-link active" href="/course"><strong>Courses</strong></a>
+          <a class="nav-item nav-link active nav-link-white" href="/course"><strong>Courses</strong></a>
           <% if (profile?.admin) { %>
-            <a class="nav-item nav-link active" href="/admin/users">Users</a>
+            <a class="nav-item nav-link active nav-link-white" href="/admin/users">Users</a>
           <% } %>
           <% if (profile) { %> 
-            <a href="/profile" class="nav-item nav-link active">Profile</a>
-            <a class="nav-item nav-link active" href="#" onclick="logout()">Logout</a>
+            <a href="/profile" class="nav-item nav-link active nav-link-white">Profile</a>
+            <a class="nav-item nav-link active nav-link-white" href="#" onclick="logout()">Logout</a>
             <%- include('../partials/logout'); %>
           <% } else { %>
-            <a class="nav-item nav-link active" href="/auth/login">Login</a>
+            <a class="nav-item nav-link active nav-link-white" href="/auth/login">Login</a>
           <% } %>
         </div>
       </div>
