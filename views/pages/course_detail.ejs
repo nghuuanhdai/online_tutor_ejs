@@ -96,6 +96,7 @@
                         </script>
                     </div>
                 </div>
+                <button class="btn btn-danger mt-2" onclick="handleDelete('<%= course.id %>')">Delete course</button>
             </div>
         </div>
     <% } %>
@@ -128,6 +129,14 @@
 </script>
 
 <% if (profile?.admin) { %>
+<script>
+    async function handleDelete(id) {
+        await fetch(`/admin/lecture/${id}/delete`,{
+            method: 'POST'
+        })
+        location.replace("/");
+    }
+</script>
 <script>
     const descriptionInput = document.getElementById("description")
     var toolbarOptions = [

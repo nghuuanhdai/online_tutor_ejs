@@ -139,4 +139,19 @@ router.post('/lectures/:id/milestone/create', async (req, res)=>{
     res.status(200).end()
 })
 
+router.post('/lectures/milestone/:id/delete', async (req, res)=>{
+    await LectureMileStone.findByIdAndDelete(req.params.id)
+    res.status(200).end()
+})
+
+router.post('/lecture/:id/delete', async (req, res)=>{
+    await Lecture.findByIdAndDelete(req.params.id)
+    res.status(200).end()
+})
+
+router.post('/course/:id/delete', async (req, res)=>{
+    await Course.findByIdAndDelete(req.params.id)
+    res.status(200).end()
+})
+
 module.exports = router

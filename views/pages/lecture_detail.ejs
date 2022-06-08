@@ -92,6 +92,9 @@
                 <% milestoneData.forEach(milestone => { %>
                     <li class="list-group-item">
                         <div class="checkbox checkbox-primary checkbox-circle">
+                            <% if (profile?.admin) { %>
+                                <button class="btn btn-danger" style="height: 30px; line-height: 15px;" onclick="handleDeleteMilestone('<%= milestone.id %>')">-</button>
+                            <% } %> 
                             <input onclick="handleMilestone('<%= milestone.id %>', '<%- profile._id.toString() %>', this)" id= "milestone_<%= milestone.id %>"  type="checkbox" <%- milestone.checked?'checked':'' %> class="checkbox-round"/>
                             <label for= "milestone_<%= milestone.id %>">
                                 <%= milestone.text %>
@@ -110,7 +113,7 @@
             <div id="quill-render-hidden"></div>
         </div>
     </div>   
-    <% if (profile.admin) { %>
+    <% if (profile?.admin) { %>
         <div class="admin-container">
             <div class="container">
                 <div class="card">
@@ -151,6 +154,7 @@
                         <button type="submit" class="btn btn-primary">Upload</button>
                     </form>
                 </div>
+                <button class="btn btn-danger mt-2" onclick="handleDelete('<%= lecture.id %>')">Delete lecture</button>
             </div>
         </div>
     <% } %>
@@ -197,7 +201,24 @@
     }
 </script>
 
-<% if (profile.admin) { %>
+<% if (profile?.admin) { %>
+
+<script>
+    async function handleDeleteMilestone(id) {
+        await fetch(`/admin/lectures/milestone/${id}/delete`,{
+            method: 'POST'
+        })
+        location.reload();
+    }
+</script>
+<script>
+    async function handleDelete(id) {
+        await fetch(`/admin/lecture/${id}/delete`,{
+            method: 'POST'
+        })
+        location.replace("/course/<%= course.id %>");
+    }
+</script>
 <script>
     const milestoneForm = document.getElementById("milestone-form")
     async function newMilestone(event) {
