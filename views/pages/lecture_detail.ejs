@@ -80,79 +80,80 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 </header>
 
-<main class="container">
-    <h4 class="row nav-link" style="color: var(--accent-color);"><a href="/course/<%= course.id %>" style="color:#6b6b6b"><%= course.title %> </a>><%= lecture.title %> </h4>
-    
-    <div class="video-container">
-        <div class="embed-responsive embed-responsive-16by9 video">
-            <iframe class="embed-responsive-item" src="https://player.vimeo.com/video/<%= lecture.videoId %> " frameborder="0" webkitallowfullscreen="true" mozallowfullscreen="true" allowFullscreen></iframe>
+<main>
+    <div class="container">
+        <h4 class="row nav-link" style="color: var(--accent-color);"><a href="/course/<%= course.id %>" style="color:#6b6b6b"><%= course.title %> </a><i class="fa-solid fa-arrow-right-long"></i> <%= lecture.title %> </h4>
+        
+        <div class="video-container">
+            <div class="embed-responsive embed-responsive-16by9 video">
+                <iframe class="embed-responsive-item" src="https://player.vimeo.com/video/<%= lecture.videoId %> " frameborder="0" webkitallowfullscreen="true" mozallowfullscreen="true" allowFullscreen></iframe>
+            </div>
+            <ul class="list-group check-list" id="check-list">
+                <% milestoneData.forEach(milestone => { %>
+                    <li class="list-group-item">
+                        <div class="checkbox checkbox-primary checkbox-circle">
+                            <input onclick="handleMilestone('<%= milestone.id %>', '<%- profile._id.toString() %>', this)" id= "milestone_<%= milestone.id %>"  type="checkbox" <%- milestone.checked?'checked':'' %> class="checkbox-round"/>
+                            <label for= "milestone_<%= milestone.id %>">
+                                <%= milestone.text %>
+                            </label>
+                        </div>
+                    </li>
+                <% }) %>
+            </ul>
         </div>
-        <ul class="list-group check-list" id="check-list">
-            <% milestoneData.forEach(milestone => { %>
-                <li class="list-group-item"> 
-                    <div class="checkbox checkbox-primary checkbox-circle">
-                        <input onclick="handleMilestone('<%= milestone.id %>', '<%- profile._id.toString() %>', this)" id= "milestone_<%= milestone.id %>"  type="checkbox" <%- milestone.checked?'checked':'' %> class="checkbox-round"/>
-                        <label for= "milestone_<%= milestone.id %>">
-                            <%= milestone.text %> 
-                        </label>
-                    </div>
-                </li>
-            <% }) %>
-        </ul>
-    </div>
-
-    <script src="https://player.vimeo.com/api/player.js"></script>
-    <script>
-    </script>
-
-    <div id="quilljs-description" class="ql-container ql-snow ql-editor"></div>
-    <p style="display: none" id="description-hidden"><%= lecture.description %></p>
-    <div style="display: none">
-        <div id="quill-render-hidden"></div>
-    </div>
-    
+        <script src="https://player.vimeo.com/api/player.js"></script>
+        <script>
+        </script>
+        <div id="quilljs-description" class="ql-container ql-snow ql-editor"></div>
+        <p style="display: none" id="description-hidden"><%= lecture.description %></p>
+        <div style="display: none">
+            <div id="quill-render-hidden"></div>
+        </div>
+    </div>   
     <% if (profile.admin) { %>
-        <div class="card">
-            <form id="lecture-form" class="card-body">
-                <h3>Update lecture</h3>
-                <div class="form-group">
-                <label for="title">Title</label>
-                <input name="title" type="text" class="form-control" id="title" value="<%= lecture.title %>">
+        <div class="admin-container">
+            <div class="container">
+                <div class="card">
+                    <form id="lecture-form" class="card-body">
+                        <h3>Update lecture</h3>
+                        <div class="form-group">
+                        <label for="title">Title</label>
+                        <input name="title" type="text" class="form-control" id="title" value="<%= lecture.title %>">
+                        </div>
+                        <div class="form-group">
+                        <input name="description" type="hidden" class="form-control" id="description" value="<%= lecture.description %>">
+                        </div>
+                        <div id="editor" style="height: 25rem"></div>
+                        </br>
+                        <button type="submit" class="btn btn-primary">Update</button>
+                    </form>
                 </div>
-                <div class="form-group">
-                <input name="description" type="hidden" class="form-control" id="description" value="<%= lecture.description %>">
+                <div class="card">
+                    <form id="milestone-form" class="card-body">
+                        <h3>New milestone</h3>
+                        <div class="form-group">
+                        <label for="text">Text</label>
+                        <input name="text" type="text" class="form-control" id="text">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Create milestone</button>
+                    </form>
                 </div>
-                <div id="editor" style="height: '25rem'"></div>
-                </br>
-                <button type="submit" class="btn btn-primary">Update</button>
-            </form>
-        </div>
-        <div class="card">
-            <form id="milestone-form" class="card-body">
-                <h3>New milestone</h3>
-                <div class="form-group">
-                <label for="text">Text</label>
-                <input name="text" type="text" class="form-control" id="text">
+                <div class="card">
+                    <form id="video-form" class="card-body">
+                        <h3>Upload video</h3>
+                        <div class="form-group">
+                            <label for="video">Video</label>
+                            <input name="video" type="file" accept=".mp4" class="form-control-file" id="video">
+                        </div>
+                        <div id="bar-wrap" class="bar-wrap">
+                            <div id="bar" class="bar"></div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Upload</button>
+                    </form>
                 </div>
-                <button type="submit" class="btn btn-primary">Create milestone</button>
-            </form>
-        </div>
-        <div class="card">
-            <form id="video-form" class="card-body">
-                <h3>Upload video</h3>
-                <div class="form-group">
-                    <label for="video">Video</label>
-                    <input name="video" type="file" accept=".mp4" class="form-control-file" id="video">
-                </div>
-                <div id="bar-wrap" class="bar-wrap">
-                    <div id="bar" class="bar"></div>
-                </div>
-                <button type="submit" class="btn btn-primary">Upload</button>
-            </form>
-
+            </div>
         </div>
     <% } %>
-    </div>
 </main>
 
 <footer>
@@ -231,12 +232,14 @@
         [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
         [{ 'font': [] }],
         [{ 'align': [] }],
-    
+
         ['clean']                                         // remove formatting button
     ];
     var editor = new Quill('#editor', {
+        'link-tooltip': true,
         modules: { toolbar: toolbarOptions },
         theme: 'snow',
+        bounds: '#editor'
     });
     editor.on('text-change', function(delta, oldDelta, source) {
         descriptionInput.value = JSON.stringify(editor.getContents());

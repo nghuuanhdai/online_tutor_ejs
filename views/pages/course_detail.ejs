@@ -13,87 +13,89 @@
 
 </header>
 
-<main class="container">
-    <object data="<%= course.imageUrl %>" type="image/png" class="card-img-top mt-2" style="max-height:25rem; object-fit: cover; border-radius: 5px; overflow: hidden;">
-        <img class="card-img-top" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAMFBMVEXp7vG6vsG3u77s8fTCxsnn7O/f5OfFyczP09bM0dO8wMPk6ezY3eDd4uXR1tnJzdBvAX/cAAACVElEQVR4nO3b23KDIBRA0ShGU0n0//+2KmO94gWZ8Zxmr7fmwWEHJsJUHw8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAwO1MHHdn+L3rIoK6eshsNJ8kTaJI07fERPOO1Nc1vgQm2oiBTWJ+d8+CqV1heplLzMRNonED+4mg7L6p591FC+133/xCRNCtd3nL9BlxWP++MOaXFdEXFjZ7r8D9l45C8y6aG0cWtP/SUGhs2d8dA/ZfGgrzYX+TVqcTNRRO9l+fS5eSYzQs85psUcuzk6igcLoHPz2J8gvzWaH/JLS+95RfOD8o1p5CU5R7l5LkfKEp0mQ1UX7hsVXqDpRrifILD/3S9CfmlUQFhQfuFu0STTyJ8gsP3PH7GVxN1FC4t2sbBy4TNRTu7LyHJbqaqKFw+/Q0ncFloo7CjRPwMnCWqKXQZ75El4nKC9dmcJaou9AXOE5UXbi+RGeJygrz8Uf+GewSn9uXuplnWDZJ7d8f24F/s6iq0LYf9olbS3Q8i5oKrRu4S9ybwaQ/aCkqtP3I28QDgeoK7TBya/aXqL5COx67PTCD2grtdOwH+pQV2r0a7YVBgZoKwwIVFQYG6ikMDVRTGByopjD8ATcKb0UhhRTe77sKs2DV7FKSjId18TUEBYVyLhUThWfILHTDqmI85/2RWWjcE/bhP6OD7maT3h20MHsA47JC3PsW0wcwLhv9t0OOPOIkCn21y2bXXwlyylxiYMPk1SuCSmpfK8bNQvIrpAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwNX4BCbAju9/X67UAAAAASUVORK5CYII=" alt="<%= course.title %>">
-    </object>
-    <div class="d-flex justify-content-center">
-        <h2 style="color: var(--accent-color);"><%= course.title %> </h2>
+<main>
+    <div class="container">
+        <object data="<%= course.imageUrl %>" type="image/png" class="card-img-top mt-2" style="max-height:25rem; object-fit: cover; border-radius: 5px; overflow: hidden;">
+            <img class="card-img-top" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAMFBMVEXp7vG6vsG3u77s8fTCxsnn7O/f5OfFyczP09bM0dO8wMPk6ezY3eDd4uXR1tnJzdBvAX/cAAACVElEQVR4nO3b23KDIBRA0ShGU0n0//+2KmO94gWZ8Zxmr7fmwWEHJsJUHw8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAwO1MHHdn+L3rIoK6eshsNJ8kTaJI07fERPOO1Nc1vgQm2oiBTWJ+d8+CqV1heplLzMRNonED+4mg7L6p591FC+133/xCRNCtd3nL9BlxWP++MOaXFdEXFjZ7r8D9l45C8y6aG0cWtP/SUGhs2d8dA/ZfGgrzYX+TVqcTNRRO9l+fS5eSYzQs85psUcuzk6igcLoHPz2J8gvzWaH/JLS+95RfOD8o1p5CU5R7l5LkfKEp0mQ1UX7hsVXqDpRrifILD/3S9CfmlUQFhQfuFu0STTyJ8gsP3PH7GVxN1FC4t2sbBy4TNRTu7LyHJbqaqKFw+/Q0ncFloo7CjRPwMnCWqKXQZ75El4nKC9dmcJaou9AXOE5UXbi+RGeJygrz8Uf+GewSn9uXuplnWDZJ7d8f24F/s6iq0LYf9olbS3Q8i5oKrRu4S9ybwaQ/aCkqtP3I28QDgeoK7TBya/aXqL5COx67PTCD2grtdOwH+pQV2r0a7YVBgZoKwwIVFQYG6ikMDVRTGByopjD8ATcKb0UhhRTe77sKs2DV7FKSjId18TUEBYVyLhUThWfILHTDqmI85/2RWWjcE/bhP6OD7maT3h20MHsA47JC3PsW0wcwLhv9t0OOPOIkCn21y2bXXwlyylxiYMPk1SuCSmpfK8bNQvIrpAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwNX4BCbAju9/X67UAAAAASUVORK5CYII=" alt="<%= course.title %>">
+        </object>
+        <div class="d-flex justify-content-center">
+            <h2 style="color: var(--accent-color);"><%= course.title %> </h2>
+        </div>
+        <div id="quilljs-description" class="card ql-container ql-snow ql-editor"></div>
+        <p style="display: none" id="description-hidden"><%= course.description %></p>
+        <div style="display: none">
+            <div id="quill-render-hidden"></div>
+        </div>
+        <h3 class="mt-5">Lectures</h3>
+        <div class="line"></div>
+        <ul class="list-group">
+            <% lectures.forEach(lecture => { %>
+                <li class="list-group-item">
+                    <% if (course.canAccess) { %>
+                        <a href="/lecture/<%= lecture.id %>" class="nav-link" style="color: #3e3e3e; font-weight: bold;"><%= lecture.title %> </a>
+                    <% } else { %>
+                        <a class="nav-link" style="color: #b4b4b4; font-weight: bold;"><%= lecture.title %> </a>
+                    <% } %>
+        
+                </li>
+            <% }) %>
+        </ul>
     </div>
-
-    <div id="quilljs-description" class="card ql-container ql-snow ql-editor"></div>
-    <p style="display: none" id="description-hidden"><%= course.description %></p>
-    <div style="display: none">
-        <div id="quill-render-hidden"></div>
-    </div>
-    <h3 class="mt-5">Lectures</h3>
-    <div class="line"></div>
-    <ul class="list-group">
-        <% lectures.forEach(lecture => { %>
-            <li class="list-group-item">
-                <% if (course.canAccess) { %>
-                    <a href="/lecture/<%= lecture.id %>" class="nav-link" style="color: #3e3e3e; font-weight: bold;"><%= lecture.title %> </a>
-                <% } else { %>
-                    <a class="nav-link" style="color: #b4b4b4; font-weight: bold;"><%= lecture.title %> </a>
-                <% } %>
-                 
-            </li>
-        <% }) %>
-    </ul>
     
     <% if (profile?.admin) { %>
-        <div class="card">
-            <form id="course-form" class="card-body">
-                <h3>Update course</h3>
-                <div class="form-group">
-                <label for="title">Title</label>
-                <input name="title" type="text" class="form-control" id="title" value="<%= course.title %>">
+        <div class="admin-container">
+            <div class="container">
+                <div class="card">
+                    <form id="course-form" class="card-body">
+                        <h3>Update course</h3>
+                        <div class="form-group">
+                        <label for="title">Title</label>
+                        <input name="title" type="text" class="form-control" id="title" value="<%= course.title %>">
+                        </div>
+                        <div class="form-group">
+                        <input name="description" type="hidden" class="form-control" id="description" value="<%= course.description %>">
+                        </div>
+                        <div id="editor" style="height: 25rem"></div>
+                        </br>
+                        <button type="submit" class="btn btn-primary">Update</button>
+                    </form>
                 </div>
-                <div class="form-group">
-                <input name="description" type="hidden" class="form-control" id="description" value="<%= course.description %>">
+                <div class="card">
+                    <form id="lecture-form" class="card-body">
+                        <h3>New lecture</h3>
+                        <div class="form-group">
+                        <label for="title">Title</label>
+                        <input name="title" type="text" class="form-control" id="title">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Create lecture</button>
+                    </form>
                 </div>
-                <div id="editor" style="height: '25rem'"></div>
-                </br>
-                <button type="submit" class="btn btn-primary">Update</button>
-            </form>
-        </div>
-        <div class="card">
-            <form id="lecture-form" class="card-body">
-                <h3>New lecture</h3>
-                <div class="form-group">
-                <label for="title">Title</label>
-                <input name="title" type="text" class="form-control" id="title">
+                <div class="card">
+                    <div class="card-body">
+                        <h3>Update thumbnail</h3>
+                        <button id="upload_widget" class="btn btn-primary">Upload files</button>
+                        <script src="https://upload-widget.cloudinary.com/global/all.js" type="text/javascript"></script>
+                        <script type="text/javascript">
+                        var myWidget = cloudinary.createUploadWidget({
+                        cloudName: '<%- cloudinary_cloud_name %>',
+                        uploadPreset: '<%- cloudinary_upload_preset %>'}, (error, result) => {
+                            if (!error && result && result.event === "success") {
+                                fetch('/admin/course/<%=course.id%>/thumbnail',{
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/json'
+                                    },
+                                    body: JSON.stringify({ url: result.info.secure_url})
+                                }).finally(()=> location.reload())
+                            }
+                        }
+                        )
+                        document.getElementById("upload_widget").addEventListener("click", function(){
+                            myWidget.open();
+                        }, false);
+                        </script>
+                    </div>
                 </div>
-                <button type="submit" class="btn btn-primary">Create lecture</button>
-            </form>
-        </div>
-        <div class="card">
-            <div class="card-body">
-                <h3>Update thumbnail</h3>
-                <button id="upload_widget" class="cloudinary-button">Upload files</button>
-    
-                <script src="https://upload-widget.cloudinary.com/global/all.js" type="text/javascript"></script>  
-    
-                <script type="text/javascript">  
-                var myWidget = cloudinary.createUploadWidget({
-                cloudName: '<%- cloudinary_cloud_name %>', 
-                uploadPreset: '<%- cloudinary_upload_preset %>'}, (error, result) => { 
-                    if (!error && result && result.event === "success") { 
-                        fetch('/admin/course/<%=course.id%>/thumbnail',{
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json'
-                            },
-                            body: JSON.stringify({ url: result.info.secure_url})
-                        }).finally(()=> location.reload())
-                    }
-                }
-                )
-
-                document.getElementById("upload_widget").addEventListener("click", function(){
-                    myWidget.open();
-                }, false);
-                </script>
             </div>
         </div>
     <% } %>
@@ -148,8 +150,10 @@
         ['clean']                                         // remove formatting button
     ];
     var editor = new Quill('#editor', {
+        'tool-tip': true,
         modules: { toolbar: toolbarOptions },
         theme: 'snow',
+        bounds: '#editor'
     });
     editor.on('text-change', function(delta, oldDelta, source) {
         descriptionInput.value = JSON.stringify(editor.getContents());
