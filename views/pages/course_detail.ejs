@@ -131,7 +131,7 @@
 <% if (profile?.admin) { %>
 <script>
     async function handleDelete(id) {
-        await fetch(`/admin/lecture/${id}/delete`,{
+        await fetch(`/admin/course/${id}/delete`,{
             method: 'POST'
         })
         location.replace("/");
