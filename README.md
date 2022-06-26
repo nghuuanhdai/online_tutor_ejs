@@ -4,7 +4,7 @@
 <p align="center">
   <img width="200" src="https://user-images.githubusercontent.com/24937352/175797809-493b719c-e306-43f2-a012-8756c5169bae.png" alt="Online tutor logo">
   <br/>
-  <h4 align="center">A web application made with ejs for online course management.</h4>
+  <h4 align="center">A web application made with ejs, express, mongodb, firebase auth, and some other 3rd party services for online course management.</h4>
 </p>
 
 ## Demo
