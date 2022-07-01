@@ -10,8 +10,8 @@
 ## Demo
 ### Live demo: https://nnhhaadd-online-tutor.herokuapp.com/
 Demo credential
-  - **User account:** email: demo.user@gmail.com, password: jLfFOGfPSGGigwaemRCL  
-  - **Lecturer account:** email: demo.admin@gmail.com, password: hYugeZMxXtpNGuzQCGxK  
+  - **User account:** email: demo.user@gmail.com, password: i0sX3W$neb;P=xZn4(uB  
+  - **Lecturer account:** email: demo.admin@gmail.com, password: yj8#eS2W(-XJ0*naw9}k   
 
 *These are dummy emails since this application doesn't provide email verification*
 
